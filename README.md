@@ -13,7 +13,7 @@
 ### to do:
 - להוסיף תגיות לפי עץ התיקיות.
 
-[torat%20emet%20website](torat emet website)
+[torat emet website](torat%20emet%20website)
 ============
 
 ### to do:
