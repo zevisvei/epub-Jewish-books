@@ -19,7 +19,7 @@ torat emet website
 ### to do:
 - להוסיף תגיות ומחברים.
 
-daat
+[daat](daat)
 ============
 
 ### to do:
