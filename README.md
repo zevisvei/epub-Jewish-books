@@ -1,4 +1,4 @@
-[תורת אמת](torat emet)
+[תורת אמת](torat%20emet)
 ============
 נוצר על ידי הסקריפטים שיש בתיקיית סקריפטים/תורת אמת בשילוב עם שימוש ב [calibre](https://calibre-ebook.com/download).
 ### בעיות:
@@ -13,7 +13,7 @@
 ### to do:
 - להוסיף תגיות לפי עץ התיקיות.
 
-[torat emet website](torat emet website)
+[torat%20emet%20website](torat emet website)
 ============
 
 ### to do:
