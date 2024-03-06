@@ -1,4 +1,4 @@
-תורת אמת
+[תורת אמת](torat emet)
 ============
 נוצר על ידי הסקריפטים שיש בתיקיית סקריפטים/תורת אמת בשילוב עם שימוש ב [calibre](https://calibre-ebook.com/download).
 ### בעיות:
@@ -7,13 +7,13 @@
 ### זכויות יוצרים:
 ברוב הספרים מצויין, לגבי שאר הספרים ראו באתר הרשמי של [תורת אמת](https://www.toratemetfreeware.com/index.html?info;5;).
 
-kindle-seforim
+[kindle-seforim](kindle-seforim)
 ============
 
 ### to do:
 - להוסיף תגיות לפי עץ התיקיות.
 
-torat emet website
+[torat emet website](torat emet website)
 ============
 
 ### to do:
