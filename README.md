@@ -9,18 +9,11 @@
 ============
 
 המרת הספרים מספריא לepub.
-
-עוד מקורות של ספרי epub:
-============
-
-
-- [kindle-seforim](https://github.com/yparitcher/kindle-seforim)
-- [torat emet website](https://www.toratemetfreeware.com/index.html?downloads;10)
-- [daat](https://www.daat.ac.il/EPUB/home.asp)
-
- [לא בכולם כיוון הדפדוף הוא מימין לשמאל]
  
  קרדיטים:
 ============
 - [תורת אמת](https://www.toratemetfreeware.com/index.html?downloads)
 - [calibre](https://calibre-ebook.com/download)
+- [kindle-seforim](https://github.com/yparitcher/kindle-seforim)
+- [torat emet website](https://www.toratemetfreeware.com/index.html?downloads;10)
+- [daat](https://www.daat.ac.il/EPUB/home.asp)
