@@ -1,0 +1,3 @@
+python_hebrew_numbers
+bs4
+lxml
