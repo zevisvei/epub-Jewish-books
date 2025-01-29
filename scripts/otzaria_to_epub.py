@@ -37,3 +37,9 @@ def main(root_folder: str, target_path: str):
             rel_path = os.path.relpath(file_path, root_folder)
             tags = rel_path.split(os.sep)
             book(file_path, tags, target_path)
+
+
+if __name__ == "__main__":
+    root_folder = ""
+    target_path = ""
+    main(root_folder, target_path)

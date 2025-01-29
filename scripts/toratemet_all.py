@@ -100,8 +100,8 @@ def main(root_folder: str, target_folder: str, he_folder_names_file: str) -> Non
             book(file_path, target_path, tags)
 
 
-folder_path = "/media/zevi5/387E388E7E384742/Users/משתמש/Documents/ToratEmetInstall/Books/"
-target_folder = "תורת אמת"
-he_folder_names_file = "folder_he_names.json"
 if __name__ == "__main__":
+    folder_path = "/media/zevi5/387E388E7E384742/Users/משתמש/Documents/ToratEmetInstall/Books/"
+    target_folder = "תורת אמת"
+    he_folder_names_file = "folder_he_names.json"
     main(folder_path, target_folder, he_folder_names_file)

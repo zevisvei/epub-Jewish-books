@@ -26,32 +26,37 @@ def main(json_folder, schemas_folder, output_folder, lang: str):
         for file in files:
             file_path = os.path.join(root, file)
             if file_path.lower().endswith(f'{lang}{os.sep}merged.json'):
-                try:
-                    text_file = file_path
-                    print(text_file)
-                    title = file_path.split(os.sep)[-3].replace(' ', '_')
-                    schema_file_name = os.path.join(schemas_folder, title + '.json')
-                    book_content, metadata, categories = get_book(title, text_file, schema_file_name, lang)
-                    output_path = [sanitize_filename(i) for i in categories]
-                    os.makedirs(os.path.join(output_folder, *output_path),exist_ok=True)
-                    output_file_name = os.path.join(output_folder, *output_path, sanitize_filename(metadata["title"]))
-                    print(output_file_name)
-                    book_dir = ' dir="rtl"' if lang == "hebrew" else ""
-                    book_content = f'<html lang={lang[:2]}><head><title></title></head><body{book_dir}>{"".join(book_content)}</body></html>'
-                    if "footnote-marker" in book_content:
-                        book_content = footnotes_to_epub(book_content)
-                    with open(f'{output_file_name}.html', 'w', encoding='utf-8') as file:
-                        file.write(book_content)
-                    to_ebook(f"{output_file_name}.html", f"{output_file_name}.epub", metadata)
-                    os.remove(f"{output_file_name}.html")
-                except Exception as e:
-                    with open("error.txt", "a", encoding="utf-8") as f:
-                        f.write(f"{file_path} {e}\n")
+                title = file_path.split(os.sep)[-3].replace(' ', '_')
+                schema_file_name = os.path.join(schemas_folder, title + '.json')
+                book(file_path, schema_file_name, title, output_folder, lang)
 
 
-json_folder = "json"
-schemas_folder = "schemas"
-output_folder = "output"
-lang = "hebrew"
-main(json_folder=json_folder, schemas_folder=schemas_folder,
-     output_folder=output_folder, lang=lang)
+def book(file_path: str, schema_file_name: str, title: str, output_folder: str = "sefaria", lang: str = "hebrew"):
+    try:
+        text_file = file_path
+        print(text_file)
+        book_content, metadata, categories = get_book(title, text_file, schema_file_name, lang)
+        output_path = [sanitize_filename(i) for i in categories]
+        os.makedirs(os.path.join(output_folder, *output_path), exist_ok=True)
+        output_file_name = os.path.join(output_folder, *output_path, sanitize_filename(metadata["title"]))
+        print(output_file_name)
+        book_dir = ' dir="rtl"' if lang == "hebrew" else ""
+        book_content = f'<html lang={lang[:2]}><head><title></title></head><body{book_dir}>{"".join(book_content)}</body></html>'
+        if "footnote-marker" in book_content:
+            book_content = footnotes_to_epub(book_content)
+        with open(f'{output_file_name}.html', 'w', encoding='utf-8') as file:
+            file.write(book_content)
+        to_ebook(f"{output_file_name}.html", f"{output_file_name}.epub", metadata)
+        os.remove(f"{output_file_name}.html")
+    except Exception as e:
+        with open("error.txt", "a", encoding="utf-8") as f:
+            f.write(f"{file_path} {e}\n")
+
+
+if __name__ == "__main__":
+    json_folder = "json"
+    schemas_folder = "schemas"
+    output_folder = "output"
+    lang = "hebrew"
+    main(json_folder=json_folder, schemas_folder=schemas_folder,
+         output_folder=output_folder, lang=lang)

@@ -12,57 +12,8 @@ def main(books_dir, target_dir):
         for file_name in files:
             if not file_name.lower().endswith(".obk"):
                 continue
-            title = None
             file_path = os.path.join(root, file_name)
-            content = read_zip(file_path)
-            archive_comment = get_comment(file_path)
-            metadata = {"language": "he"}
-            if archive_comment:
-                archive_comment = archive_comment.splitlines()
-                dict_comment = {}
-                for line in archive_comment:
-                    try:
-                        name_key, name_value = line.split("=")
-                        dict_comment[name_key.strip()] = name_value.strip()
-                    except ValueError:
-                        continue
-                title = dict_comment.get("DisplayName")
-                if not title:
-                    title = dict_comment.get("ForcedBookName")
-                if dict_comment.get("RavMechaber"):
-                    metadata["authors"] = dict_comment["RavMechaber"]
-                metadata["publisher"] = dict_comment.get("TextSource") or "oryta"
-
-            content = read_zip(file_path)
-            if not content:
-                continue
-            content = re.sub(r"<!--[^א-ת]+?-->", "", content)
-            content = content.splitlines()
-            fix_content, title_from_file = proses_file(content)
-            fix_spaces = fix_content.splitlines()
-            output_text = [line.strip() for line in fix_spaces if line.strip()]
-            join_lines = html_module.unescape("\n".join(output_text))
-            join_lines = heading_order(join_lines)
-            target_dir_heb, tags = get_path(file_path, books_dir, target_dir)
-            if tags:
-                metadata["tags"] = ",".join(tags)
-            os.makedirs(target_dir_heb, exist_ok=True)
-            if not title:
-                title = title_from_file
-            metadata["title"] = title
-            title = sanitize_filename(title)
-            target_file_path = os.path.join(target_dir_heb, f"{title}")
-            num = 1
-            while os.path.exists(target_file_path):
-                num += 1
-                target_file_path = os.path.join(target_dir_heb, f"{title}_{num}")
-            html_file = f"{target_file_path}.html"
-            epub_file = f"{target_file_path}.epub"
-            processed_html = f'<html><head><title>{title}</title></head><body dir="rtl">{join_lines}</body></html>'
-            with open(html_file, "w", encoding="utf-8") as output:
-                output.write(processed_html)
-            to_ebook(html_file, epub_file, metadata)
-            os.remove(html_file)
+            book(file_path, target_dir)
 
 
 def read_zip(file_path):
@@ -183,6 +134,60 @@ def proses_file(text):
     return str(soup), title
 
 
-books_dir = "/home/zevi5/Downloads/otzaria-library/OraytaToOtzaria/סקריפטים/books"
-target_dir = os.path.join("..", "ספרים", "לא ממויין")
-main(books_dir, target_dir)
+def book(file_path: str, target_dir: str = "oryta"):
+    title = None
+    content = read_zip(file_path)
+    archive_comment = get_comment(file_path)
+    metadata = {"language": "he"}
+    if archive_comment:
+        archive_comment = archive_comment.splitlines()
+        dict_comment = {}
+        for line in archive_comment:
+            try:
+                name_key, name_value = line.split("=")
+                dict_comment[name_key.strip()] = name_value.strip()
+            except ValueError:
+                continue
+        title = dict_comment.get("DisplayName")
+        if not title:
+            title = dict_comment.get("ForcedBookName")
+        if dict_comment.get("RavMechaber"):
+            metadata["authors"] = dict_comment["RavMechaber"]
+        metadata["publisher"] = dict_comment.get("TextSource") or "oryta"
+
+    content = read_zip(file_path)
+    if not content:
+        return
+    content = re.sub(r"<!--[^א-ת]+?-->", "", content)
+    content = content.splitlines()
+    fix_content, title_from_file = proses_file(content)
+    fix_spaces = fix_content.splitlines()
+    output_text = [line.strip() for line in fix_spaces if line.strip()]
+    join_lines = html_module.unescape("\n".join(output_text))
+    join_lines = heading_order(join_lines)
+    target_dir_heb, tags = get_path(file_path, books_dir, target_dir)
+    if tags:
+        metadata["tags"] = ",".join(tags)
+    os.makedirs(target_dir_heb, exist_ok=True)
+    if not title:
+        title = title_from_file
+    metadata["title"] = title
+    title = sanitize_filename(title)
+    target_file_path = os.path.join(target_dir_heb, f"{title}")
+    num = 1
+    while os.path.exists(target_file_path):
+        num += 1
+        target_file_path = os.path.join(target_dir_heb, f"{title}_{num}")
+    html_file = f"{target_file_path}.html"
+    epub_file = f"{target_file_path}.epub"
+    processed_html = f'<html><head><title>{title}</title></head><body dir="rtl">{join_lines}</body></html>'
+    with open(html_file, "w", encoding="utf-8") as output:
+        output.write(processed_html)
+    to_ebook(html_file, epub_file, metadata)
+    os.remove(html_file)
+
+
+if __name__ == "__main__":
+    books_dir = "/home/zevi5/Downloads/otzaria-library/OraytaToOtzaria/סקריפטים/books"
+    target_dir = os.path.join("..", "ספרים", "לא ממויין")
+    main(books_dir, target_dir)

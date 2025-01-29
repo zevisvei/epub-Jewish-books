@@ -170,9 +170,9 @@ def book(file_path: str, target_file: list, file_name: str, target_folder: str =
     os.remove(html_file)
 
 
-xml_file = "/home/zevi5/Downloads/otzaria-library/OnYourWayToOtzaria/סקריפטים/שונות/xml/tnc.xml"
-tree = ET.parse(xml_file)
-book_folder = "/home/zevi5/Downloads/otzaria-library/OnYourWayToOtzaria/סקריפטים/שונות/xml"
-root = tree.getroot()
-
-process_node(root, book_folder)
+if __name__ == "__main__":
+    xml_file = "/home/zevi5/Downloads/otzaria-library/OnYourWayToOtzaria/סקריפטים/שונות/xml/tnc.xml"
+    tree = ET.parse(xml_file)
+    book_folder = "/home/zevi5/Downloads/otzaria-library/OnYourWayToOtzaria/סקריפטים/שונות/xml"
+    root = tree.getroot()
+    process_node(root, book_folder)
