@@ -65,7 +65,7 @@ def process_html_file(input_file: str) -> tuple[str, dict] | None:
     return processed_html, metadata
 
 
-def book(file_path: str, target_path: str, tags: list | None = None) -> None:
+def book(file_path: str, target_path: str = "torat emet", tags: list | None = None) -> None:
     html_func = process_html_file(file_path)
     if html_func:
         html_content, metadata = html_func
